@@ -4,8 +4,10 @@ import { useRouter } from "next/router";
 export default function FirstPost() {
   const router = useRouter();
   const [formData, setformData] = useState({
+    name: "",
     email: "",
     password: "",
+    address: "",
   });
 
   const handleChange = (e) => {
@@ -21,7 +23,7 @@ export default function FirstPost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/users/login", {
+    const response = await fetch("/api/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,10 +34,8 @@ export default function FirstPost() {
     if (response.ok) {
       const result = await response.json();
       console.log(result.token); // This will show the JWT token in the console
-
+      router.push("/login/login");
       // Save the token in localStorage
-      localStorage.setItem("x-auth-token", result.token);
-      router.push("/");
 
       console.log("Token saved to localStorage:", result.token);
     } else {
@@ -67,6 +67,24 @@ export default function FirstPost() {
             id="password"
             onChange={handleChange}
             value={formData.password} // bind value to the state
+          />
+        </div>
+        <div>
+          <label htmlFor="">Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="om"
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="">Name</label>
+          <input
+            type="text"
+            name="address"
+            placeholder="church gate,Mumbai"
+            onChange={handleChange}
           />
         </div>
         <button type="submit">Submit</button>

@@ -6,7 +6,11 @@
     "start": "NODE_ENV=production nodemon server/index.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.1691.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"

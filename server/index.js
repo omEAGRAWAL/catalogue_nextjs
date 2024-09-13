@@ -38,6 +38,7 @@ const userRoutes = require("./routes/userRoutes");
 const fileRoutes = require("./routes/fileRoutes");
 const productRoutes = require("./routes/productRoutes");
 const catalogueRoutes = require("./routes/catalogueRoutes");
+const cors =require("cors")
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -47,6 +48,8 @@ app.prepare().then(() => {
   const server = express();
 
   server.use(express.json());
+  server.use(cors());
+
 
   // Connect to MongoDB
   mongoose
