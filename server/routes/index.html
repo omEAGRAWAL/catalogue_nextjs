@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload</title>
+  </head>
+  <body>
+    <h1>Upload a File</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" name="file" id="fileInput" required />
+      <button type="submit">Upload</button>
+    </form>
+
+    <p id="responseMessage"></p>
+
+    <script>
+      const form = document.getElementById("uploadForm");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevent the default form submission
+
+        const fileInput = document.getElementById("fileInput");
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        try {
+          const response = await fetch(
+            "http://localhost:8000/api/files/upload",
+            {
+              method: "POST",
+              body: formData, // Pass the formData object containing the file
+              headers: {
+                // Do NOT set Content-Type manually
+                "x-auth-token":
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZlMjc0ZmQwZThiZDNiMTVmNmZlMTY3In0sImlhdCI6MTcyNjExNzExNywiZXhwIjoxNzI2NDc3MTE3fQ.l_sIx1XlqOGgTdg3ljzCHdbvhQv6IWKblCGN-aAyQHY", // Add your token here
+              },
+            }
+          );
+
+          const data = await response.json();
+          if (response.ok) {
+            console.log("File uploaded successfully:", data.fileUrl);
+            // Handle success (e.g., display message or URL)
+          } else {
+            console.error("File upload failed:", data.msg);
+            // Handle error (e.g., show error message)
+          }
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      });
+    </script>
+  </body>
+</html>
