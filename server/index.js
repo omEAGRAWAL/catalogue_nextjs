@@ -38,7 +38,8 @@ const userRoutes = require("./routes/userRoutes");
 const fileRoutes = require("./routes/fileRoutes");
 const productRoutes = require("./routes/productRoutes");
 const catalogueRoutes = require("./routes/catalogueRoutes");
-const cors =require("cors")
+const cartRoutes = require("./routes/cartRoutes");
+const cors = require("cors");
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -49,7 +50,6 @@ app.prepare().then(() => {
 
   server.use(express.json());
   server.use(cors());
-
 
   // Connect to MongoDB
   mongoose
@@ -64,6 +64,7 @@ app.prepare().then(() => {
   server.use("/api/files", fileRoutes);
   server.use("/api/product", productRoutes);
   server.use("/api/catalogue", catalogueRoutes);
+  server.use("/api/cart", cartRoutes);
 
   // Handle Next.js page requests
   server.get("*", (req, res) => {
