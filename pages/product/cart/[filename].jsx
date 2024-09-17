@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 
 const Cart = () => {
   const router = useRouter();
-  const { filename } = router.query; // Access the variable part of the URL
+  const { filename } = router.query;
   const [cartItems, setCartItems] = useState([]);
   const [xauthtoken, setXAuthToken] = useState("");
   const [error, setError] = useState(null);
 
-  // Fetch cart data when component is mounted or filename changes
   useEffect(() => {
     if (!filename) return;
 
@@ -40,22 +39,23 @@ const Cart = () => {
     };
 
     fetchCart();
-  }, [filename]); // Add filename as a dependency
+  }, [filename]);
 
-  // Remove item from cart
   const removeFromCart = async (productId) => {
     try {
-      const response = await fetch(`/api/cart/remove/${filename}`, {
-        method: "DELETE",
-        headers: {
-          "x-auth-token": xauthtoken,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId }),
-      });
+      const response = await fetch(
+        `/api/cart/remove/${filename}/${productId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "x-auth-token": xauthtoken,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId }),
+        }
+      );
 
       if (response.ok) {
-        // Remove item from UI
         setCartItems((prevItems) =>
           prevItems.filter((item) => item.productId._id !== productId)
         );
@@ -72,18 +72,60 @@ const Cart = () => {
   }
 
   return (
-    <div>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h1>Your Cart</h1>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         cartItems.map((item) => (
-          <div key={item.productId._id}>
-            <h3>{item.productId.name}</h3>
-            <p>Quantity: {item.quantity}</p>
-            <button onClick={() => removeFromCart(item.productId._id)}>
-              Remove
-            </button>
+          <div
+            key={item.productId._id}
+            style={{
+              display: "flex",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              padding: "10px",
+              marginBottom: "10px",
+              alignItems: "center",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {item.productId.image_url && (
+              <img
+                src={item.productId.image_url}
+                alt={item.productId.name}
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  marginRight: "15px",
+                  borderRadius: "8px",
+                }}
+              />
+            )}
+            <div style={{ flex: 1 }}>
+              <h3 style={{ margin: "0 0 10px" }}>{item.productId.name}</h3>
+              {item.productId.description && (
+                <p style={{ margin: "0 0 10px", color: "#555" }}>
+                  {item.productId.description}
+                </p>
+              )}
+              <p style={{ margin: "0 0 10px", fontWeight: "bold" }}>
+                Quantity: {item.quantity}
+              </p>
+              <button
+                onClick={() => removeFromCart(item.productId._id)}
+                style={{
+                  padding: "8px 12px",
+                  border: "none",
+                  borderRadius: "4px",
+                  backgroundColor: "#ff4d4d",
+                  color: "#fff",
+                  cursor: "pointer",
+                }}
+              >
+                Remove
+              </button>
+            </div>
           </div>
         ))
       )}

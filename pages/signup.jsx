@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { Link } from "next/link";
 
 export default function FirstPost() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function FirstPost() {
     if (response.ok) {
       const result = await response.json();
       console.log(result.token); // This will show the JWT token in the console
-      router.push("/login/login");
+      router.push("/login");
       // Save the token in localStorage
 
       console.log("Token saved to localStorage:", result.token);
@@ -88,6 +89,10 @@ export default function FirstPost() {
           />
         </div>
         <button type="submit">Submit</button>
+
+        <div>
+          All ready have a accont?<a href="./login">Log in</a>
+        </div>
       </form>
     </>
   );

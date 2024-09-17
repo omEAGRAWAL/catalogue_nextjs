@@ -84,23 +84,93 @@ const ProductCatalogue = () => {
 // Card component to display individual product details
 const ProductCard = ({ product, canEdit, addToCart }) => {
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      style={{
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        padding: "15px",
+        margin: "10px",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        maxWidth: "200px",
+        textAlign: "center",
+      }}
+    >
       <img
-        src={`${product.image_url}`}
+        src={product.image_url}
         alt={product.name}
-        style={{ width: 55, height: 55 }}
+        style={{
+          width: "100px",
+          height: "100px",
+          borderRadius: "8px",
+          marginBottom: "10px",
+        }}
       />
-      <h2>{product.name}</h2>
-      {product.description && <p>Description: {product.description}</p>}
-      {product.price && <p>Price: ${product.price}</p>}
-      <p>Can Edit: {canEdit ? "Yes" : "No"}</p>
-      <p>
+      <h2
+        style={{
+          fontSize: "18px",
+          margin: "0 0 10px",
+        }}
+      >
+        {product.name}
+      </h2>
+      {product.description && (
+        <p
+          style={{
+            fontSize: "14px",
+            margin: "0 0 10px",
+            color: "#555",
+          }}
+        >
+          Description: {product.description}
+        </p>
+      )}
+      {product.price && (
+        <p
+          style={{
+            fontSize: "16px",
+            margin: "0 0 10px",
+            fontWeight: "bold",
+          }}
+        >
+          Price: ${product.price}
+        </p>
+      )}
+      <p
+        style={{
+          margin: "0 0 10px",
+          fontStyle: "italic",
+        }}
+      >
+        Can Edit: {canEdit ? "Yes" : "No"}
+      </p>
+      <p
+        style={{
+          margin: "0 0 10px",
+        }}
+      >
         Reviews:{" "}
         {product.reviews.length > 0
           ? product.reviews.join(", ")
           : "No reviews yet"}
       </p>
-      <button onClick={() => addToCart(product._id)}>Add to Cart</button>
+      <button
+        onClick={() => addToCart(product._id)}
+        style={{
+          padding: "10px 15px",
+          border: "none",
+          borderRadius: "4px",
+          backgroundColor: "#007bff",
+          color: "#fff",
+          cursor: "pointer",
+          fontSize: "16px",
+        }}
+      >
+        Add to Cart
+      </button>
     </div>
   );
 };

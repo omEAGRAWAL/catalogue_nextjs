@@ -10,6 +10,10 @@ export default function Nav() {
     setIsAuthenticated(!!token);
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem("x-auth-token");
+  };
+
   return (
     <header>
       <div
@@ -79,10 +83,13 @@ export default function Nav() {
                   <li>Email ID</li>
                 </ul>
               </div>
+              <div>
+                <button onclick={logout}>Log Out</button>
+              </div>
             </div>
           ) : (
             <div>
-              <Link href="/login/signup">Sign Up</Link>
+              <Link href="/signup">Sign Up</Link>
             </div>
           )}
         </div>
