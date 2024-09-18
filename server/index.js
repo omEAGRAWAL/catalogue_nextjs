@@ -40,6 +40,7 @@ const productRoutes = require("./routes/productRoutes");
 const catalogueRoutes = require("./routes/catalogueRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -50,6 +51,8 @@ app.prepare().then(() => {
 
   server.use(express.json());
   server.use(cors());
+  server.use(cookieParser());
+
 
   // Connect to MongoDB
   mongoose

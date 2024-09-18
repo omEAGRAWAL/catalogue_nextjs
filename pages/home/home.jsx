@@ -8,3 +8,10 @@ export default function home() {
     </div>
   );
 }
+
+// if(logedin){
+//   console.log("welcome home")
+// }
+// else{
+//   console.log("plese log in")
+// }

@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+
 const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
@@ -23,7 +24,9 @@ exports.registerUser = async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res
+          .json({ token })
+          .cookie("token", token, { httpOnly: false, secure: false });
       }
     );
   } catch (err) {
@@ -50,14 +53,14 @@ exports.loginUser = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-     
+
       (err, token) => {
         if (err) throw err;
-        res.json({ token }).cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-        });
+        res
+          .cookie("token", token, {
+            httpOnly: true,
+          })
+          .json({ token });
       }
     );
   } catch (err) {

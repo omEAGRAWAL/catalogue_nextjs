@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Upload from "../component/Upload";
 
 const ProductCatalogue = () => {
   const router = useRouter();
@@ -67,6 +68,9 @@ const ProductCatalogue = () => {
   return (
     <div>
       <h1>Catalogue Products</h1>
+      <Upload catId={filename} />
+      <a href={`/product/upload/${filename}`}>upload</a>
+
       <div className="product-catalogue">
         {catalogue.product_list.map((item) => (
           <ProductCard
